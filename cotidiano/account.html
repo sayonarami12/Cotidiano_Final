@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cotidiano Fragrance — My Account</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+
+        /* =====================
+           RESET & VARIABLES
+        ===================== */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --black:    #111111;
+            --white:    #ffffff;
+            --gray-100: #f5f5f5;
+            --gray-200: #e8e8e8;
+            --gray-400: #aaaaaa;
+            --gray-600: #666666;
+            --green:    #16a34a;
+            --font-display: 'Cormorant Garamond', Georgia, serif;
+            --font-body:    'DM Sans', system-ui, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--white);
+            color: var(--black);
+            -webkit-font-smoothing: antialiased;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        img { display: block; }
+        a   { text-decoration: none; color: inherit; }
+
+
+        /* =====================
+           NAVBAR
+        ===================== */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 48px;
+        }
+
+        .navbar__logo img {
+            height: 28px;
+            width: auto;
+        }
+
+        .navbar__links {
+            display: flex;
+            gap: 36px;
+            list-style: none;
+        }
+
+        .navbar__links a {
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--gray-600);
+            transition: color 0.2s;
+        }
+
+        .navbar__links a:hover,
+        .navbar__links a.active { color: var(--black); }
+
+        .navbar__actions {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .navbar__actions a {
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gray-600);
+            transition: color 0.2s;
+        }
+
+        .navbar__actions a:hover { color: var(--black); }
+
+        .cart-link {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            color: var(--black) !important;
+            font-weight: 500;
+        }
+
+        .cart-count {
+            background: var(--black);
+            color: var(--white);
+            font-size: 10px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        /* =====================
+           PAGE WRAPPER
+        ===================== */
+        .page-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 64px 80px;
+            flex: 1;
+            width: 100%;
+        }
+
+
+        /* =====================
+           PAGE HEADER
+        ===================== */
+        .page-header {
+            padding: 40px 0 36px;
+            border-bottom: 1px solid var(--gray-200);
+            margin-bottom: 40px;
+        }
+
+        .page-header h1 {
+            font-family: var(--font-display);
+            font-size: 40px;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+        }
+
+
+        /* =====================
+           SECTION LABELS
+        ===================== */
+        .section-label {
+            font-size: 12px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--gray-400);
+            margin-bottom: 16px;
+        }
+
+
+        /* =====================
+           PROFILE SECTION
+        ===================== */
+        .profile-section {
+            margin-bottom: 52px;
+        }
+
+        .profile-card {
+            border: 1px solid var(--gray-200);
+            border-radius: 2px;
+            padding: 28px 32px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--black);
+            color: var(--white);
+            font-size: 18px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            letter-spacing: 0.04em;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .profile-name {
+            font-family: var(--font-display);
+            font-size: 26px;
+            font-weight: 400;
+        }
+
+        .profile-email {
+            font-size: 14px;
+            color: var(--gray-600);
+            letter-spacing: 0.02em;
+        }
+
+        .profile-meta {
+            display: flex;
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        .meta-pill {
+            font-size: 11px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            border: 1px solid var(--gray-200);
+            padding: 4px 12px;
+            border-radius: 99px;
+            color: var(--gray-400);
+        }
+
+        /* Sign out — black background to make it prominent */
+        .signout-btn {
+            margin-left: auto;
+            font-family: var(--font-body);
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--white);
+            background: var(--black);
+            border: 1px solid var(--black);
+            padding: 10px 20px;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            flex-shrink: 0;
+        }
+
+        .signout-btn:hover { opacity: 0.75; }
+
+
+        /* =====================
+           ORDERS SECTION
+        ===================== */
+        .orders-section { width: 100%; }
+
+        /* Empty state */
+        .orders-empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            padding: 64px 0;
+            text-align: center;
+        }
+
+        .orders-empty p {
+            font-family: var(--font-display);
+            font-size: 24px;
+            color: var(--gray-400);
+        }
+
+        .orders-empty a {
+            font-size: 11px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--black);
+            border-bottom: 1px solid var(--black);
+            padding-bottom: 2px;
+            transition: opacity 0.2s;
+        }
+
+        .orders-empty a:hover { opacity: 0.6; }
+
+
+        /* =====================
+           ORDER CARDS
+           Left border color = status indicator
+        ===================== */
+        .order-card {
+            border: 1px solid var(--gray-200);
+            border-radius: 2px;
+            margin-bottom: 14px;
+            overflow: hidden;
+            width: 100%;
+            border-left-width: 3px;
+        }
+
+        /* Processing — solid black left border */
+        .order-card--processing { border-left-color: var(--black); }
+
+        /* Shipped — mid gray left border */
+        .order-card--shipped    { border-left-color: var(--gray-400); }
+
+        /* Delivered — green left border */
+        .order-card--delivered  { border-left-color: var(--green); }
+
+
+        /* Card header */
+        .order-card__header {
+            padding: 16px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--gray-200);
+            background: var(--gray-100);
+        }
+
+        .order-card__id {
+            font-size: 13px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .order-card__date {
+            font-size: 12px;
+            color: var(--gray-400);
+            margin-top: 4px;
+        }
+
+        /* Status text — replaces pill badge */
+        .order-status {
+            font-size: 11px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .order-status--processing { color: var(--black); }
+        .order-status--shipped    { color: var(--gray-400); }
+        .order-status--delivered  { color: var(--green); }
+
+        /* Green check dot for delivered */
+        .status-check {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--green);
+            color: var(--white);
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+
+        /* Card body — items list */
+        .order-card__body { padding: 18px 22px; }
+
+        .order-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+
+        .order-item-row:last-child { margin-bottom: 0; }
+
+        .order-item-name  { color: var(--black); }
+        .order-item-qty   { font-size: 12px; color: var(--gray-400); margin-left: 6px; }
+        .order-item-price { font-weight: 500; }
+
+
+        /* Card footer — address + total */
+        .order-card__footer {
+            padding: 14px 22px;
+            border-top: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .order-address {
+            font-size: 12px;
+            color: var(--gray-400);
+            line-height: 1.7;
+        }
+
+        .order-total {
+            font-size: 18px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+
+        /* =====================
+           FOOTER
+        ===================== */
+        .footer {
+            background: var(--black);
+            padding: 32px 48px 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+        }
+
+        .footer__links {
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            list-style: none;
+            padding-bottom: 20px;
+        }
+
+        .footer__links a {
+            font-size: 13px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #555;
+            transition: color 0.2s;
+        }
+
+        .footer__links a:hover { color: var(--white); }
+
+        .footer__copy {
+            font-size: 10px;
+            color: #444;
+            letter-spacing: 0.04em;
+            text-align: center;
+            width: 100%;
+            padding-top: 20px;
+            border-top: 1px solid #222;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- =====================
+         NAVBAR
+    ===================== -->
+    <nav class="navbar">
+        <a href="index.html" class="navbar__logo">
+            <img src="assets/images/cotidiano_logo.png" alt="Cotidiano Fragrance">
+        </a>
+        <ul class="navbar__links">
+            <li><a href="index.html">Shop</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+        <div class="navbar__actions">
+            <a href="account.html" class="active">Account</a>
+            <a href="cart.html" class="cart-link">
+                Cart <span class="cart-count" id="cart-count">0</span>
+            </a>
+        </div>
+    </nav>
+
+
+    <!-- =====================
+         PAGE CONTENT
+    ===================== -->
+    <div class="page-wrapper">
+
+        <div class="page-header">
+            <h1>My Account</h1>
+        </div>
+
+        <!-- Profile -->
+        <div class="profile-section">
+            <p class="section-label">Profile</p>
+            <div class="profile-card">
+                <div class="avatar"    id="user-avatar"></div>
+                <div class="profile-info">
+                    <div class="profile-name"  id="user-name"></div>
+                    <div class="profile-email" id="user-email"></div>
+                    <div class="profile-meta">
+                        <span class="meta-pill">Member since 2024</span>
+                        <span class="meta-pill" id="order-count-pill"></span>
+                    </div>
+                </div>
+                <button class="signout-btn" id="signout-btn">Sign Out</button>
+            </div>
+        </div>
+
+        <!-- Orders -->
+        <div class="orders-section">
+            <p class="section-label">My Orders</p>
+            <div id="orders-list"></div>
+        </div>
+
+    </div>
+
+
+    <!-- =====================
+         FOOTER
+    ===================== -->
+    <footer class="footer">
+        <ul class="footer__links">
+            <li><a href="index.html">Shop</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="#">Privacy</a></li>
+        </ul>
+        <p class="footer__copy">© 2026 Cotidiano Fragrance. All rights reserved.</p>
+    </footer>
+
+
+    <script>
+        // ================================================================
+        // AUTH GUARD
+        // ----------------------------------------------------------------
+        // TODO (Backend team): Replace with your session/token check.
+        // ================================================================
+        const user = JSON.parse(localStorage.getItem("user") || "null");
+        if (!user) window.location.href = "login.html";
+
+
+        // ================================================================
+        // CART COUNT
+        // ================================================================
+        function updateCartCount() {
+            const cart  = JSON.parse(localStorage.getItem("cart") || "[]");
+            const total = cart.reduce((sum, i) => sum + i.quantity, 0);
+            document.getElementById("cart-count").textContent = total;
+        }
+
+
+        // ================================================================
+        // HELPERS
+        // ================================================================
+
+        // Generate initials from full name
+        function getInitials(name) {
+            const parts = name.trim().split(" ");
+            if (parts.length === 1) return parts[0][0].toUpperCase();
+            return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+        }
+
+        // Returns status HTML — left border driven, no pill badges
+        function getStatusHTML(status) {
+            if (status === "Processing") {
+                return `
+                    <div class="order-status order-status--processing">
+                        Processing
+                    </div>
+                `;
+            }
+            if (status === "Shipped") {
+                return `
+                    <div class="order-status order-status--shipped">
+                        Shipped
+                    </div>
+                `;
+            }
+            if (status === "Delivered") {
+                return `
+                    <div class="order-status order-status--delivered">
+                        <div class="status-check">✓</div>
+                        Delivered
+                    </div>
+                `;
+            }
+            return `<div class="order-status order-status--processing">${status}</div>`;
+        }
+
+        // Returns the CSS modifier class for the order card border
+        function getCardClass(status) {
+            if (status === "Processing") return "order-card--processing";
+            if (status === "Shipped")    return "order-card--shipped";
+            if (status === "Delivered")  return "order-card--delivered";
+            return "order-card--processing";
+        }
+
+
+        // ================================================================
+        // RENDER PROFILE
+        // ================================================================
+        async function renderProfile() {
+            try {
+                const res = await fetch(`http://localhost/cotidiano/api/orders.php?customerID=${user.customerID}`);
+                const orders = await res.json();
+                const orderCount = (orders && Array.isArray(orders)) ? orders.length : 0;
+                
+                document.getElementById("user-avatar").textContent  = getInitials(user.name);
+                document.getElementById("user-name").textContent    = user.name;
+                document.getElementById("user-email").textContent   = user.email;
+                document.getElementById("order-count-pill").textContent =
+                    `${orderCount} order${orderCount !== 1 ? "s" : ""} placed`;
+            } catch (err) {
+                console.error("Failed to load profile:", err);
+                document.getElementById("user-avatar").textContent  = getInitials(user.name);
+                document.getElementById("user-name").textContent    = user.name;
+                document.getElementById("user-email").textContent   = user.email;
+                document.getElementById("order-count-pill").textContent = "0 orders placed";
+            }
+        }
+
+
+        // ================================================================
+        // RENDER ORDERS
+        // ================================================================
+        async function renderOrders() {
+            try {
+                const res = await fetch(`http://localhost/cotidiano/api/orders.php?customerID=${user.customerID}`);
+                const orders = await res.json();
+                const list = document.getElementById("orders-list");
+
+                if (!orders || orders.length === 0) {
+                    list.innerHTML = `
+                        <div class="orders-empty">
+                            <p>No orders yet.</p>
+                            <a href="index.html">Start Shopping</a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Sort: Processing → Shipped → Delivered
+                const sorted = [...orders].sort((a, b) => {
+                    const rank = { "Processing": 0, "Shipped": 1, "Delivered": 2 };
+                    return (rank[a.status] ?? 0) - (rank[b.status] ?? 0);
+                });
+
+                list.innerHTML = sorted.map(order => `
+                    <div class="order-card ${getCardClass(order.status)}">
+
+                        <div class="order-card__header">
+                            <div>
+                                <div class="order-card__id">#${order.orderId}</div>
+                                <div class="order-card__date">${order.date}</div>
+                            </div>
+                            ${getStatusHTML(order.status)}
+                        </div>
+
+                        <div class="order-card__body">
+                            ${order.items.map(item => `
+                                <div class="order-item-row">
+                                    <span>
+                                        <span class="order-item-name">${item.name}</span>
+                                        <span class="order-item-qty">x${item.quantity}</span>
+                                    </span>
+                                    <span class="order-item-price">
+                                        ₱${(item.price * item.quantity).toLocaleString()}
+                                    </span>
+                                </div>
+                            `).join("")}
+                        </div>
+
+                        <div class="order-card__footer">
+                            <div class="order-address">
+                                ${order.shippingAddress.street},
+                                ${order.shippingAddress.city},
+                                ${order.shippingAddress.province}
+                                · ${order.shippingAddress.zip}
+                                · ${order.shippingAddress.phone}
+                            </div>
+                            <div class="order-total">₱${order.total.toLocaleString()}</div>
+                        </div>
+
+                    </div>
+                `).join("");
+            } catch (err) {
+                console.error("Failed to load orders:", err);
+                document.getElementById("orders-list").innerHTML = `
+                    <div class="orders-empty">
+                        <p>Failed to load orders.</p>
+                    </div>
+                `;
+            }
+        }
+
+
+        // ================================================================
+        // SIGN OUT
+        // ----------------------------------------------------------------
+        // TODO (Backend team): Add a fetch() POST to your logout endpoint
+        // before clearing localStorage if using server-side sessions.
+        // ================================================================
+        document.getElementById("signout-btn").addEventListener("click", () => {
+            localStorage.removeItem("user");
+            window.location.href = "login.html";
+        });
+
+
+        // ================================================================
+        // INIT
+        // ================================================================
+        updateCartCount();
+        renderProfile();
+        renderOrders();
+    </script>
+
+</body>
+</html>
